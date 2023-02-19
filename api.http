@@ -1,0 +1,32 @@
+### GET Users in internal database
+GET http://localhost:3000/users
+
+### GET User in external API
+GET http://localhost:8000/users/43
+
+### POST Users in internal database and external API
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Vagner",
+  "lastName": "Siqueira",
+  "age": 25,
+  "email": "juniorterriaga0@gmail.com",
+  "password": "1234556"
+}
+
+### PUT Users in internal database and external API
+PUT http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "name": "Arethaaaa",
+  "lastName": "Terriaga",
+  "age": 25,
+  "email": "teste@gmail.com",
+  "password": "1234556"
+}
+
+### Delete user in internal database and external API
+DELETE http://localhost:3000/users/6

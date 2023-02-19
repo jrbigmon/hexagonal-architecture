@@ -1,18 +1,35 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { UserModel } from './entities/user.model';
+import { User } from './entities/user.entity';
+import { UserGatewayInMemory } from './gateways/users.gateway-in-memory';
 import { UsersService } from './users.service';
+import { of } from 'rxjs';
+
+const mockHttpService = {
+  post: jest.fn().mockReturnValue(of(null)),
+};
 
 describe('UsersService', () => {
   let service: UsersService;
+  let userGateway: UserGatewayInMemory;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService],
-    }).compile();
-
-    service = module.get<UsersService>(UsersService);
+  beforeEach(() => {
+    userGateway = new UserGatewayInMemory();
+    service = new UsersService(userGateway, mockHttpService as any);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('Create', () => {
+    it('should be return create user', async () => {
+      const userMocked = {
+        name: 'user',
+        lastName: 'user teste',
+        age: 123,
+        email: 'teste',
+        password: 'teste',
+      } as User;
+
+      const user = await service.create(userMocked);
+
+      expect(user).toMatchObject(userMocked);
+    });
   });
 });
