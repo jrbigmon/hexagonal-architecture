@@ -19,10 +19,18 @@ export class UserGatewaySequelize implements UserGatewayInterface {
 
   async findAll(): Promise<User[]> {
     const users = await this.userModel.findAll();
-    return users.map(
-      (user) =>
-        new User(user.name, user.lastName, user.age, user.email, user.password),
-    );
+    return users.map((user) => {
+      const userAmount = new User(
+        user.name,
+        user.lastName,
+        user.age,
+        user.email,
+        null,
+        user.id,
+      );
+      delete userAmount.password;
+      return userAmount;
+    });
   }
 
   async findById(id: number): Promise<User> {
@@ -33,6 +41,25 @@ export class UserGatewaySequelize implements UserGatewayInterface {
       user.age,
       user.email,
       user.password,
+      user.id,
     );
+  }
+
+  async update(id: number, data: User): Promise<boolean> {
+    const userUpdated = await this.userModel.update(data, {
+      where: { id: id },
+    });
+
+    return userUpdated?.length > 0;
+  }
+
+  async delete(id: number): Promise<boolean> {
+    const userDeleted = await this.userModel.destroy({ where: { id: id } });
+
+    if (userDeleted) {
+      return true;
+    }
+
+    return false;
   }
 }

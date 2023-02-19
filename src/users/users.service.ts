@@ -1,8 +1,6 @@
 import { UserGatewayHttp } from './gateways/users-gateways-http';
 import { UserGatewaySequelize } from './gateways/users-gateways-sequelize';
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -14,7 +12,7 @@ export class UsersService {
     private userGatewayIntegration: UserGatewayHttp,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: User) {
     const user = new User(
       createUserDto.name,
       createUserDto.lastName,
@@ -38,13 +36,13 @@ export class UsersService {
     return await this.userGatewayInternal.findById(id);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return 'teste';
-    // return await this.repository.update(updateUserDto, { where: { id: id } });
+  async update(id: number, updateUserDto: User) {
+    await this.userGatewayIntegration.update(id, updateUserDto);
+    return await this.userGatewayInternal.update(id, updateUserDto);
   }
 
   async remove(id: number) {
-    return 'teste';
-    // return await this.repository.destroy({ where: { id: id } });
+    await this.userGatewayIntegration.delete(id);
+    return await this.userGatewayInternal.delete(id);
   }
 }
