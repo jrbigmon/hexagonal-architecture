@@ -1,10 +1,10 @@
+import { UserModel } from './users/entities/user.model';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './users/entities/user.entity';
 import { LoggerMiddleware } from './logger/logger.middleware';
 
-const models = [User];
+const models = [UserModel];
 
 @Module({
   imports: [

@@ -1,33 +1,50 @@
-import { Injectable } from '@nestjs/common';
+import { UserGatewayHttp } from './gateways/users-gateways-http';
+import { UserGatewaySequelize } from './gateways/users-gateways-sequelize';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { InjectModel } from '@nestjs/sequelize';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User)
-    protected readonly repository: typeof User,
+    @Inject('UserGatewayInterface')
+    private userGatewayInternal: UserGatewaySequelize,
+    @Inject('UserGatewayHttp')
+    private userGatewayIntegration: UserGatewayHttp,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.repository.create(createUserDto);
+  async create(createUserDto: CreateUserDto) {
+    const user = new User(
+      createUserDto.name,
+      createUserDto.lastName,
+      createUserDto.age,
+      createUserDto.email,
+      createUserDto.password,
+    );
+
+    const userCreatedInternal = await this.userGatewayInternal.create(user);
+
+    await this.userGatewayIntegration.create(user);
+
+    return userCreatedInternal;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.userGatewayInternal.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    return await this.userGatewayInternal.findById(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return 'teste';
+    // return await this.repository.update(updateUserDto, { where: { id: id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    return 'teste';
+    // return await this.repository.destroy({ where: { id: id } });
   }
 }

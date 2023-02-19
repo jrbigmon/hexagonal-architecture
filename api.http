@@ -1,4 +1,8 @@
+###
 GET http://localhost:3000/users
+
+###
+GET http://localhost:8000/users
 
 ###
 POST http://localhost:3000/users
@@ -9,5 +13,18 @@ Content-Type: application/json
   "lastName": "Siqueira",
   "age": 25,
   "email": "juniorterriaga0@gmail.com",
+  "password": "1234556"
+}
+
+###
+
+PATCH http://localhost:3000/users/2
+Content-Type: application/json
+
+{
+  "name": "Aretha",
+  "lastName": "Terriaga",
+  "age": 25,
+  "email": "teste@gmail.com",
   "password": "1234556"
 }

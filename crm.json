@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "name": "Vagner",
+      "lastName": "Siqueira",
+      "fullName": "Vagner Siqueira",
+      "age": 25,
+      "id": 1
+    },
+    {
+      "name": "Vagner",
+      "lastName": "Siqueira",
+      "fullName": "Vagner Siqueira",
+      "age": 25,
+      "id": 2
+    }
+  ]
+}
