@@ -1,4 +1,4 @@
-import { User } from './../entities/user.entity';
+import { User } from '../entities/user.entity';
 import { UserGatewayInterface } from './users-gatways-interface';
 export class UserGatewayInMemory implements UserGatewayInterface {
   users: User[] = [];

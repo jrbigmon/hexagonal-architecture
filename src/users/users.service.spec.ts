@@ -1,6 +1,6 @@
 import { UserModel } from './entities/user.model';
 import { User } from './entities/user.entity';
-import { UserGatewayInMemory } from './gateways/users.gateway-in-memory';
+import { UserGatewayInMemory } from './gateways/users.gateways-in-memory';
 import { UsersService } from './users.service';
 import { of } from 'rxjs';
 

@@ -1,11 +1,22 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { LogsService } from 'src/logs/logs.service';
+import { getBrowser } from 'src/utils/browser-detect';
+
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  private readonly logger = new Logger();
+  constructor(private readonly logsService: LogsService) {}
 
-  use(req: Request, res: Response, next: () => void) {
-    const { method, originalUrl, body, ip } = req;
+  private readonly logger = new Logger('Users');
+
+  async use(req: Request, res: Response, next: () => void) {
+    const { method, originalUrl, body, ip, headers } = req;
+
+    const deviceString = headers['user-agent'];
+
+    const deviceObject = getBrowser(deviceString);
+
+    await this.logsService.create(deviceObject);
 
     const bodyIsEmpty = Object.keys(body).length === 0;
 
@@ -16,7 +27,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
       const content = `${method} ${originalUrl} ${statusCode} ${statusMessage} - ${ip} ${
         !bodyIsEmpty ? JSON.stringify(body) : ''
-      }`;
+      } ${deviceString}`;
 
       if (statusCode >= 100 && statusCode <= 399) this.logger.log(content);
       if (statusCode >= 400 && statusCode <= 499) this.logger.warn(content);

@@ -3,9 +3,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { LoggerMiddleware } from './logger/logger.middleware';
+import { LogsModule } from './logs/logs.module';
 
 const models = [UserModel];
-
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -13,10 +13,11 @@ const models = [UserModel];
       autoLoadModels: true,
       dialect: 'sqlite',
       database: 'hexagonal-architecture',
-      logging: true,
+      logging: false,
       models,
     }),
     UsersModule,
+    LogsModule,
   ],
 })
 export class AppModule implements NestModule {
