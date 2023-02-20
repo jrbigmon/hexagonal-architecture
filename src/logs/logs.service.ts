@@ -1,6 +1,6 @@
+import { Log } from './entities/log.entity';
 import { LogGatewayHttp } from './gateways/logs-gateways-http';
 import { Inject, Injectable } from '@nestjs/common';
-import { DeviceDetectorResult } from 'device-detector-js';
 
 @Injectable()
 export class LogsService {
@@ -9,7 +9,7 @@ export class LogsService {
     private readonly logGatewayHttp: LogGatewayHttp,
   ) {}
 
-  async create(createLogDto: DeviceDetectorResult) {
+  async create(createLogDto: Log) {
     return await this.logGatewayHttp.create(createLogDto);
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { Log } from 'src/logs/entities/log.entity';
 import { LogsService } from 'src/logs/logs.service';
 import { getBrowser } from 'src/utils/browser-detect';
 
@@ -16,7 +17,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
     const deviceObject = getBrowser(deviceString);
 
-    await this.logsService.create(deviceObject);
+    await this.logsService.create(deviceObject as Log);
 
     const bodyIsEmpty = Object.keys(body).length === 0;
 
