@@ -11,12 +11,25 @@ export class LogGatewayHttp implements LogGatewayInterface {
   ) {}
 
   async create(log: Log): Promise<Log> {
-    const logFormated = new Log(log.device, log.os, log.client);
-
-    const response = await lastValueFrom(
-      this.httpService.post('logs', logFormated),
+    const logFormated = new Log(
+      log.device,
+      log.os,
+      log.client,
+      log.params,
+      log.method,
+      log.message,
+      log.router,
+      log.ip,
     );
 
-    return response.data;
+    try {
+      const response = await lastValueFrom(
+        this.httpService.post('logs', logFormated),
+      );
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }

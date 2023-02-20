@@ -21,5 +21,10 @@ export class Log {
     public device: DeviceResult,
     public os: OperatingSystemResult,
     public client: ClientResult,
+    public params: string,
+    public method: string,
+    public message: string,
+    public router: string,
+    public ip: string,
   ) {}
 }

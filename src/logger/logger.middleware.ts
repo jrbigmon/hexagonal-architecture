@@ -17,11 +17,9 @@ export class LoggerMiddleware implements NestMiddleware {
 
     const deviceObject = getBrowser(deviceString);
 
-    await this.logsService.create(deviceObject as Log);
-
     const bodyIsEmpty = Object.keys(body).length === 0;
 
-    res.on('finish', () => {
+    res.on('finish', async () => {
       const { statusCode, statusMessage } = res;
 
       if (body && body?.hasOwnProperty('password')) delete body['password'];
@@ -33,6 +31,19 @@ export class LoggerMiddleware implements NestMiddleware {
       if (statusCode >= 100 && statusCode <= 399) this.logger.log(content);
       if (statusCode >= 400 && statusCode <= 499) this.logger.warn(content);
       if (statusCode >= 500 && statusCode <= 599) this.logger.error(content);
+
+      try {
+        await this.logsService.create({
+          ...deviceObject,
+          params: JSON.stringify(body),
+          method: method,
+          message: statusMessage,
+          router: originalUrl,
+          ip: ip,
+        } as Log);
+      } catch (error) {
+        throw new Error(error.message);
+      }
     });
 
     next();
