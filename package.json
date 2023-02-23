@@ -31,7 +31,7 @@
     "device-detector-js": "^3.0.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "sequelize": "^6.28.0",
+    "sequelize": "^6.28.2",
     "sequelize-typescript": "^2.1.5",
     "sqlite3": "^5.1.4"
   },
