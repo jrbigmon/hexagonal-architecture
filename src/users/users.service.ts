@@ -1,15 +1,15 @@
-import { UserGatewayHttp } from './gateways/users-gateways-http';
+import { UserCreatedEvent } from './events/users-created-event';
 import { UserGatewaySequelize } from './gateways/users-gateways-sequelize';
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
+import EventEmitter from 'events';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('UserGatewayInterface')
     private userGatewayInternal: UserGatewaySequelize,
-    @Inject('UserGatewayHttp')
-    private userGatewayIntegration: UserGatewayHttp,
+    private eventEmitter: EventEmitter,
   ) {}
 
   async create(createUserDto: User) {
@@ -23,7 +23,10 @@ export class UsersService {
 
     const userCreatedInternal = await this.userGatewayInternal.create(user);
 
-    await this.userGatewayIntegration.create(user);
+    this.eventEmitter.emit(
+      'user.created',
+      new UserCreatedEvent(userCreatedInternal),
+    );
 
     return userCreatedInternal;
   }
@@ -37,12 +40,12 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: User) {
-    await this.userGatewayIntegration.update(id, updateUserDto);
+    // await this.userGatewayIntegration.update(id, updateUserDto);
     return await this.userGatewayInternal.update(id, updateUserDto);
   }
 
   async remove(id: number) {
-    await this.userGatewayIntegration.delete(id);
+    // await this.userGatewayIntegration.delete(id);
     return await this.userGatewayInternal.delete(id);
   }
 }

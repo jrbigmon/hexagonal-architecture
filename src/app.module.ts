@@ -4,10 +4,11 @@ import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { LogsModule } from './logs/logs.module';
-
+import { EventEmitterModule } from '@nestjs/event-emitter';
 const models = [UserModel];
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     SequelizeModule.forRoot({
       host: ':memory:',
       autoLoadModels: true,

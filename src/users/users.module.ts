@@ -6,6 +6,8 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { HttpModule } from '@nestjs/axios';
 import { UserModel } from './entities/user.model';
+import { CreateUserInCrmListener } from './listeners/create-users-in-crm-listener';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 const models = [UserModel];
 @Module({
@@ -14,6 +16,7 @@ const models = [UserModel];
     UsersService,
     UserGatewaySequelize,
     UserGatewayHttp,
+    CreateUserInCrmListener,
     {
       provide: 'UserGatewayInterface',
       useExisting: UserGatewaySequelize,
@@ -21,6 +24,10 @@ const models = [UserModel];
     {
       provide: 'UserGatewayHttp',
       useExisting: UserGatewayHttp,
+    },
+    {
+      provide: 'EventEmitter',
+      useExisting: EventEmitter2,
     },
   ],
   imports: [
