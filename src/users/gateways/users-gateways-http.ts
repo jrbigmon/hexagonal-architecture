@@ -65,6 +65,7 @@ export class UserGatewayHttp implements UserGatewayInterface {
 
   async delete(id: number): Promise<boolean> {
     const userInAPI = await this.findByFilter({ internalId: id });
+    if (!userInAPI) return false;
 
     await lastValueFrom(this.httpService.delete(`users/${userInAPI.id}`));
 
