@@ -29,7 +29,7 @@ export class LogGatewayHttp implements LogGatewayInterface {
 
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error.message);
     }
   }
 }

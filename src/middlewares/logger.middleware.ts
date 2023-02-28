@@ -32,18 +32,14 @@ export class LoggerMiddleware implements NestMiddleware {
       if (statusCode >= 400 && statusCode <= 499) this.logger.warn(content);
       if (statusCode >= 500 && statusCode <= 599) this.logger.error(content);
 
-      try {
-        await this.logsService.create({
-          ...deviceObject,
-          params: JSON.stringify(body),
-          method: method,
-          message: statusMessage,
-          router: originalUrl,
-          ip: ip,
-        } as Log);
-      } catch (error) {
-        throw new Error(error.message);
-      }
+      await this.logsService.create({
+        ...deviceObject,
+        params: JSON.stringify(body),
+        method: method,
+        message: statusMessage,
+        router: originalUrl,
+        ip: ip,
+      } as Log);
     });
 
     next();
