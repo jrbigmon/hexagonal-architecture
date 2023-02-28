@@ -1,7 +1,7 @@
 import { lastValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { Log } from '../entities/log.entity';
-import { Inject } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import { LogGatewayInterface } from './logs-gateways-interface';
 
 export class LogGatewayHttp implements LogGatewayInterface {
@@ -9,6 +9,8 @@ export class LogGatewayHttp implements LogGatewayInterface {
     @Inject(HttpService)
     private readonly httpService: HttpService,
   ) {}
+
+  private logger = new Logger(LogGatewayHttp.name);
 
   async create(log: Log): Promise<Log> {
     const logFormated = new Log(
@@ -29,7 +31,7 @@ export class LogGatewayHttp implements LogGatewayInterface {
 
       return response.data;
     } catch (error) {
-      console.log(error.message);
+      this.logger.error(error.message);
     }
   }
 }
