@@ -9,6 +9,7 @@ export class UsersService {
   constructor(
     @Inject('UserGatewayInterface')
     private userGatewayInternal: UserGatewaySequelize,
+    @Inject('EventEmitter')
     private eventEmitter: EventEmitter,
   ) {}
 
