@@ -8,7 +8,7 @@ import { UserGatewayInterface } from './gateways/users-gatways-interface';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject('UserGatewayInterface')
+    @Inject('UserGatewayInternal')
     private userGatewayInternal: UserGatewayInterface,
     @Inject('EventEmitter')
     private eventEmitter: EventEmitter,

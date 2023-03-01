@@ -18,12 +18,8 @@ const models = [UserModel];
     UserGatewayHttp,
     UserInCrmListener,
     {
-      provide: 'UserGatewayInterface',
+      provide: 'UserGatewayInternal',
       useExisting: UserGatewaySequelize,
-    },
-    {
-      provide: 'UserGatewayHttp',
-      useExisting: UserGatewayHttp,
     },
     {
       provide: 'EventEmitter',
