@@ -1,15 +1,15 @@
 import { UserCreatedEvent } from './events/users-created.event';
-import { UserGatewaySequelize } from './gateways/users-gateways-sequelize';
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import EventEmitter from 'events';
 import { UserUpdatedEvent } from './events/users-updated.event';
+import { UserGatewayInterface } from './gateways/users-gatways-interface';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('UserGatewayInterface')
-    private userGatewayInternal: UserGatewaySequelize,
+    private userGatewayInternal: UserGatewayInterface,
     @Inject('EventEmitter')
     private eventEmitter: EventEmitter,
   ) {}
