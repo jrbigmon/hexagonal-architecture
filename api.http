@@ -2,7 +2,7 @@
 GET http://localhost:3000/users
 
 ### GET User in external API
-GET http://localhost:8000/users/43
+GET http://localhost:8000/users
 
 ### POST Users in internal database and external API
 POST http://localhost:3000/users
@@ -29,4 +29,4 @@ Content-Type: application/json
 }
 
 ### Delete user in internal database and external API
-DELETE http://localhost:3000/users/6
+DELETE http://localhost:3000/users/1
