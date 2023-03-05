@@ -43,7 +43,5 @@ export class UserGatewayInMemory implements UserGatewayInterface {
     }
 
     this.users.splice(userIndex, 1);
-
-    return;
   }
 }
