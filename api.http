@@ -25,7 +25,8 @@ Content-Type: application/json
   "lastName": "Terriaga",
   "age": 25,
   "email": "teste@gmail.com",
-  "password": "1234556"
+  "password": "1234556",
+  "location": "teste"
 }
 
 ### Delete user in internal database and external API

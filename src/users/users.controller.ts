@@ -6,16 +6,21 @@ import {
   Param,
   Delete,
   Put,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
+import { UserCreateDto } from './dto/user-create.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: User) {
+  create(
+    @Body(new ValidationPipe({ stopAtFirstError: true }))
+    createUserDto: UserCreateDto,
+  ) {
     return this.usersService.create(createUserDto);
   }
 
