@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 import { LocationCreateDto } from '../../locations/dto/location-create.dto';
 import { ValidateNestedCustom } from '../../utils/validate-nested-custom';
 import { User } from '../entities/user.entity';
